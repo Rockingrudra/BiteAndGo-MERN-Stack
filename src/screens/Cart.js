@@ -17,30 +17,22 @@ export default function Cart() {
 
   const handleCheckout = async () => {
     const userEmail = localStorage.getItem("userEmail");
-
-    // Order object structure that matches backend expectations
     const orderData = {
       email: userEmail,
-      order_data: [
-        data, // your cart items
-        { Order_date: new Date().toDateString() },
-      ],
+      order_data: [data, { Order_date: new Date().toDateString() }],
     };
 
     try {
       const response = await fetch("http://localhost:5000/api/auth/orderData", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData),
       });
 
       if (response.ok) {
-        const json = await response.json();
-        console.log("Order Response:", json);
+        await response.json();
         alert("✅ Order Placed Successfully!");
-        dispatch({ type: "DROP" }); // clear cart
+        dispatch({ type: "DROP" });
       } else {
         alert("❌ Failed to place order. Please try again.");
       }
@@ -56,56 +48,70 @@ export default function Cart() {
 
   return (
     <div>
+      {/* Cart Items */}
       {data.map((food, index) => (
         <div
           key={index}
-          className="d-flex justify-content-between align-items-center my-3 p-3"
+          className="d-flex justify-content-between align-items-center mb-3 p-3"
           style={{
-            backgroundColor: "#fdfdfd",
+            backgroundColor: "#fff",
             borderRadius: "14px",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
+            boxShadow: "0 3px 8px rgba(0,0,0,0.08)",
           }}
         >
+          {/* Left section (image + details) */}
           <div className="d-flex align-items-center">
             <img
               src={food.img}
               alt={food.name}
               style={{
-                height: "60px",
-                width: "60px",
+                height: "65px",
+                width: "65px",
                 borderRadius: "10px",
                 objectFit: "cover",
-                marginRight: "10px",
+                marginRight: "15px",
               }}
             />
             <div>
-              <h6 className="fw-bold mb-1" style={{ color: "#222" }}>
+              <h6
+                className="fw-bold mb-1"
+                style={{ color: "#222", fontSize: "1rem" }}
+              >
                 {food.name}
               </h6>
-              <small style={{ color: "#555", fontWeight: "500" }}>
+              <small
+                style={{
+                  color: "#666",
+                  fontWeight: "500",
+                  fontSize: "0.85rem",
+                }}
+              >
                 Qty: {food.qty} | Size: {food.size}
               </small>
             </div>
           </div>
 
+          {/* Right section (price + remove) */}
           <div className="text-end">
             <p
               className="fw-semibold mb-1"
-              style={{ color: "#FF4B2B", fontSize: "1rem" }}
+              style={{
+                color: "#FF4B2B",
+                fontSize: "1rem",
+                marginBottom: "4px",
+              }}
             >
               ₹{food.price}
             </p>
             <button
-              className="btn btn-sm"
+              onClick={() => handleRemove(index)}
+              className="btn btn-link p-0"
               style={{
                 color: "#FF4B2B",
-                backgroundColor: "transparent",
-                border: "1px solid #FF4B2B",
-                borderRadius: "8px",
                 fontWeight: "600",
-                padding: "3px 10px",
+                fontSize: "0.9rem",
+                textDecoration: "none",
               }}
-              onClick={() => handleRemove(index)}
             >
               Remove
             </button>
@@ -113,29 +119,27 @@ export default function Cart() {
         </div>
       ))}
 
-      <hr />
+      <hr className="my-4" />
 
+      {/* Total Row */}
       <div className="d-flex justify-content-between align-items-center mt-3">
-        <h5 className="fw-bold text-dark">Total</h5>
-        <h5 className="fw-bold" style={{ color: "#FF4B2B" }}>
+        <h5 className="fw-bold text-dark mb-0">Total</h5>
+        <h5
+          className="fw-bold mb-0"
+          style={{ color: "#FF4B2B", fontSize: "1.2rem" }}
+        >
           ₹{totalPrice}/-
         </h5>
       </div>
 
+      {/* Hidden button for Modal’s Proceed */}
       <div className="text-center mt-4">
         <button
-          className="btn w-100 fw-semibold"
-          style={{
-            background: "linear-gradient(90deg, #FF4B2B 0%, #FF914D 100%)",
-            color: "#fff",
-            borderRadius: "12px",
-            padding: "10px 0",
-            fontSize: "1rem",
-            border: "none",
-          }}
+          id="cart-checkout-btn"
+          className="btn btn-danger d-none"
           onClick={handleCheckout}
         >
-          Place Order 🚀
+          Hidden Checkout Trigger
         </button>
       </div>
     </div>

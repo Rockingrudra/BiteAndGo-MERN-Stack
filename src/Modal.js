@@ -1,9 +1,14 @@
 import React from "react";
 
-export default function Modal({ children, onClose }) {
+export default function Modal({ children, onClose, onCheckout }) {
+  const handleClose = onClose || (() => alert("Close clicked"));
+  const handleCheckout = onCheckout || (() => alert("Proceeding to Checkout"));
+
   return (
     <div
       className="modal fade show"
+      role="dialog"
+      aria-modal="true"
       style={{
         display: "block",
         backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -19,11 +24,7 @@ export default function Modal({ children, onClose }) {
     >
       <div
         className="modal-dialog modal-dialog-centered"
-        style={{
-          maxWidth: "750px", // Increased from 600px
-          width: "90%",
-          margin: "auto",
-        }}
+        style={{ maxWidth: "750px", width: "90%", margin: "auto" }}
       >
         <div
           className="modal-content border-0"
@@ -32,8 +33,6 @@ export default function Modal({ children, onClose }) {
             overflow: "hidden",
             boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
             backgroundColor: "#fff",
-            transform: "scale(1)",
-            transition: "transform 0.3s ease",
           }}
         >
           {/* Header */}
@@ -50,7 +49,7 @@ export default function Modal({ children, onClose }) {
             <button
               type="button"
               className="btn-close btn-close-white"
-              onClick={onClose}
+              onClick={handleClose}
               aria-label="Close"
             ></button>
           </div>
@@ -58,12 +57,7 @@ export default function Modal({ children, onClose }) {
           {/* Body */}
           <div
             className="modal-body"
-            style={{
-              maxHeight: "75vh",
-              overflowY: "auto",
-              backgroundColor: "#fff",
-              padding: "1.5rem",
-            }}
+            style={{ maxHeight: "75vh", overflowY: "auto", padding: "1.5rem" }}
           >
             {children}
           </div>
@@ -80,7 +74,7 @@ export default function Modal({ children, onClose }) {
           >
             <button
               className="btn"
-              onClick={onClose}
+              onClick={handleClose}
               style={{
                 backgroundColor: "#e0e0e0",
                 color: "#333",
@@ -93,6 +87,7 @@ export default function Modal({ children, onClose }) {
             </button>
             <button
               className="btn text-white"
+              onClick={handleCheckout}
               style={{
                 background: "linear-gradient(90deg, #FF4B2B 0%, #FF914D 100%)",
                 border: "none",

@@ -16,8 +16,8 @@ export default function MyOrder() {
       const data = await response.json();
       console.log("📦 My Orders Response:", data);
 
-      if (data.orderData && data.orderData.order_data) {
-        setOrderData(data.orderData.order_data); // ✅ Correctly set top-level array
+      if (data.orderData && Array.isArray(data.orderData.order_data)) {
+        setOrderData(data.orderData.order_data);
       } else {
         setOrderData([]);
       }
@@ -56,9 +56,16 @@ export default function MyOrder() {
             .slice(0)
             .reverse()
             .map((orderArray, orderIndex) => {
-              // Each orderArray = [cartItems..., {Order_date: "..."}]
-              const orderDate =
-                orderArray.find((x) => x.Order_date)?.Order_date || "Unknown";
+              // ✅ Ensure each orderArray is valid
+              if (!Array.isArray(orderArray)) {
+                console.warn("⚠️ Invalid order data:", orderArray);
+                return null;
+              }
+
+              const orderDateObj = orderArray.find(
+                (x) => x && typeof x === "object" && x.Order_date
+              );
+              const orderDate = orderDateObj ? orderDateObj.Order_date : "Unknown";
 
               return (
                 <div key={orderIndex} className="mb-5">
@@ -83,7 +90,7 @@ export default function MyOrder() {
                   {/* Order Items */}
                   <div className="row justify-content-center">
                     {orderArray
-                      .filter((item) => !item.Order_date)
+                      .filter((item) => item && !item.Order_date)
                       .map((item, index) => (
                         <div
                           className="col-12 col-md-6 col-lg-3 d-flex justify-content-center"
