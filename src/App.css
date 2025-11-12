@@ -1,0 +1,125 @@
+/* ========== GLOBAL APP THEME ========== */
+.App {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* ========== BRAND LOGO ANIMATION ========== */
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========== HEADER STYLING (OPTIONAL HERO SECTION) ========== */
+.App-header {
+  background: linear-gradient(90deg, #FF4B2B 0%, #FF914D 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ========== LINKS (HOVER EFFECTS) ========== */
+.App-link {
+  color: #FF914D;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.App-link:hover {
+  color: #FFD166;
+}
+
+/* ========== FORM INPUTS ========== */
+input.form-control {
+  color: #fff !important;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(255, 145, 77, 0.7) !important;
+  transition: all 0.3s ease;
+}
+
+input.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 400;
+}
+
+input.form-control:focus {
+  outline: none !important;
+  border: 1px solid #FF914D !important;
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 0 10px rgba(255, 145, 77, 0.7) !important;
+}
+
+/* ========== BUTTONS ========== */
+.btn-gradient {
+  background: linear-gradient(90deg, #FF4B2B 0%, #FF914D 100%) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 10px 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-gradient:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(255, 145, 77, 0.5);
+}
+
+/* ========== GLASS EFFECT CARD ========== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  color: #fff;
+}
+
+/* ========== TEXT GRADIENT HEADINGS ========== */
+.gradient-text {
+  background: linear-gradient(90deg, #FF4B2B 0%, #FF914D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* ========== GLOBAL SCROLLBAR (optional aesthetic) ========== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FF4B2B, #FF914D);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
